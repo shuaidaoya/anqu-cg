@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <title>暗区突围cg展示</title>
+    <style>
+        * {
+        /* 常规初始化 */
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        }
+        body {
+        /* 常规居中显示，简单背景色 */
+       
+        place-content: center;
+        min-height: 100vh;
+    
+        }
+        .box {
+        /* 卡片排列开，加间距 */
+        display: flex;
+        gap: 5vmin;
+        }
+        
+        .card {
+        /* 卡片宽高，高度通过比例自动，圆角，卡片阴影 */
+        width: 30vmin;
+        aspect-ratio: 3/4;
+        border-radius: 1vmin;
+        box-shadow: rgba(255, 255, 255, 0.2) 0 5vmin 6vmin -8vmin,
+            var(--color) 0 4.5vmin 5vmin -6vmin,
+            rgba(50, 50, 50, 0.5) 0 8vmin 4vmin -2vmin,
+            rgba(0, 0, 0, 0.8) 0 4vmin 5vmin -3vmin;
+
+        /* 超出部分隐藏，定位点 */
+        overflow: hidden;
+        position: relative;
+        }
+
+        .card img {
+        /* 图片宽高，直接铺满整个卡片，按比例缩放 */
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+
+        /* 给个定位脱离原位置，加上过渡动画 */
+        position: absolute;
+        transition: all 0.8s;
+        }
+        .card:hover img {
+        /* 鼠标放入 图片放大一点 */
+        transform: scale(1.1);
+        }
+
+        .card::before,
+        .card::after {
+        content: "";
+        /* 黑色透明蒙版的宽高，分上下两段，所以高度 50% */
+        width: 100%;
+        height: 50%;
+        background-color: rgba(0, 0, 0, 0.5);
+
+        /* 定位在图片上面 */
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 1;
+
+        /* 默认横向缩小到 0就看不见了，再添加过渡动画，过渡起点是左边开始 */
+        transform: scaleX(0);
+        transition: all 0.5s;
+        transform-origin: left;
+        }
+        .card::after {
+        /* 蒙版下半部分，定位到下一半，并添加过渡延时，比上半部分慢一点 */
+        top: 50%;
+        transition-delay: 0.15s;
+        }
+        .card:hover::before,
+        .card:hover::after {
+        /* 鼠标放入直接 横向缩放 还原大小，配合动画时间 */
+        transform: scaleX(1);
+        }
+
+        .card .text-box {
+        /* 文字默认颜色，大小，字间距 */
+        color: rgba(255, 255, 255, 0.9);
+        font-size: 2vmin;
+        letter-spacing: 0.1vmin;
+
+        /* 显示区域是向内部缩小挤出来 */
+        inset: 2vmin;
+        /* 定位在底部 */
+        position: absolute;
+        top: auto;
+        /* 显示层级比黑色蒙版高 */
+        z-index: 2;
+        }
+        .card .text-box h2,
+        .card .text-box p {
+        /* 文字默认颜色改为图文主题的颜色 */
+        color: var(--color);
+        /* 默认隐藏，不显示 */
+        opacity: 0;
+        /* 默认文字在底部以外的位置 */
+        transform: translateY(10vmin);
+
+        /* 过渡动画时间，文字颜色稍微长一些，不然不明显 */
+        transition: all 0.8s, color 3s;
+        }
+        .card .text-box h2 {
+        /* 大标题字体变大，加粗，距离下面多一点 */
+        font-size: 6vmin;
+        font-weight: bold;
+        margin-bottom: 1vmin;
+        }
+        .card .text-box p {
+        /* 文字段 晚一点开始动画 */
+        transition-delay: 0.15s;
+        }
+        .card:hover .text-box h2,
+        .card:hover .text-box p {
+        /* 鼠标放入卡片时，文字颜色改为父级的白色 */
+        color: inherit;
+        /* 慢慢显示 */
+        opacity: 1;
+        /* 位置还原 */
+        transform: translateY(0);
+        }
+        a{
+            font-size: 18px;
+            color: #007AFF;
+            text-decoration: none;
+        }
+        div{
+            width: 100%;
+            height: auto;     
+        }
+        video {
+            width: 100%;
+            height: auto;
+        }
+        p{
+            position: relative;
+            left: 40px;
+        }
+    </style>
+</head>
+<body>
+    <br>
+    <!-- 原页签中打开 -->
+   <a href="https://boke.ssdxz.site/">帅帅的博客</a><br><br>
+    <!-- 默认值 target="_self"  原页签中打开-->
+    <a href="https://www.ssdxz.site/" target="_self">帅帅的主页</a><br><br>
+    <!-- 新页签打开 -->
+   <a href="https://boke.ssdxz.site/" target="_blank">帅帅的博客-新页签打开</a><br><br>
+    各位的头像:
+    <a href="./img/老肖头像.webp" target="_blank">去看老肖</a>
+    <a href="./img/姜创头像.webp" target="_blank">去看姜创</a>
+    <a href="./img/长威头像.webp" target="_blank">去看长威</a>
+    <a href="./img/小徐头像.webp" target="_blank">去看小徐</a><br><br>
+    <div class="box">
+        <div class="card" style="--color: #0d9545;">
+            <img src="./img/老肖头像.webp" alt="老肖">
+
+            <div class="text-box">
+                <h2>老肖</h2>
+                <p>
+                    曾经的实力选手<br>自从被热成像吓破胆之后<br> 胆小如鼠，实在该死！
+                </p>
+            </div>
+        </div>
+
+        <div class="card" style="--color: #45b9dd;">
+            <img src="./img/姜创头像.webp" alt="姜创">
+
+            <div class="text-box">
+                <h2>姜创</h2>
+                <p>
+                    实力选手，队伍里的<br> 冲锋手，实力担当<br> 没他就得散
+                </p>
+            </div>
+        </div>
+
+        <div class="card" style="--color: #FFC700;">
+            <img src="./img/长威头像.webp" alt="长威">
+
+            <div class="text-box">
+                <h2>长威</h2>
+                <p>
+                    暗区里阴暗的老鼠<br> 逃兵！没话说!<br>直接送上军事法庭！
+                </p>
+            </div>
+        </div>
+
+    </div>
+<br><br>
+    <h2>暗区突围cg展示</h2>
+    <div class="video-gallery">
+        <!-- 视频1 -->
+        <p>暗区突围--国潮-金戈铁甲cg</p>
+        <video controls>
+            <source src="img/国潮-金戈铁甲.mp4" type="video/mp4">
+            您的浏览器不支持视频播放功能。
+        </video> 
+
+        <!-- 视频2 -->
+        <p>暗区突围--噤声者cg</p>
+        <video controls>
+            <source src="img/噤声者.mp4" type="video/mp4">
+            您的浏览器不支持视频播放功能。
+        </video>
+
+        <!-- 视频3 -->
+        <p>暗区突围--巅峰M4cg</p>
+        <video controls>
+            <source src="img/巅峰M4.mp4" type="video/mp4">
+            您的浏览器不支持视频播放功能。
+        </video>
+
+        <!-- 视频4 -->
+        <p>暗区突围--深潜行者cg</p>
+        <video controls>
+            <source src="img/暗区突围深潜行者.mp4" type="video/mp4">
+            您的浏览器不支持视频播放功能。
+        </video>
+    </div> 
+    <br>
+    <!-- 注意点：
+    1.代码中的多个空格、多个回车，都会被浏览器解析成一个空格！
+    2.虽然是行内元素，但a元素可以包裹除它自身外的任何元素！
+    想展示多个回车或空格，怎么办呢？一一后面会讲。 -->
+</body>
+</html>
